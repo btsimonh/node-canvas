@@ -69,7 +69,7 @@ jobs:
         canvas_tag: ["v3.0.0-rc2"] # e.g. "v2.6.1"
     name: ${{ matrix.canvas_tag }}, Node.js ${{ matrix.node }}, Linux
     runs-on: ubuntu-latest
-    if: ${{ target.os }} == 'ubuntu-latest'
+    if: contains(fromJson(inputs.os)), 'ubuntu-latest')
     container:
       image: ${{ matrix.node < 18 && 'chearon/canvas-prebuilt:9' || 'zbbjornson/canvas-prebuilt:11' }}
     env:
@@ -163,7 +163,7 @@ jobs:
         canvas_tag: ["v3.0.0-rc2"] # e.g. "v2.6.1"
     name: ${{ matrix.canvas_tag}}, Node.js ${{ matrix.node }}, macOS
     runs-on: macos-13 # macos-14+ is M1
-    if: ${{ target.os }} == 'macos-13'
+    if: contains(fromJson(inputs.os)), 'macos-13')
     env:
       CANVAS_VERSION_TO_BUILD: ${{ matrix.canvas_tag }}
     steps:
@@ -239,7 +239,7 @@ jobs:
         canvas_tag: ["v3.0.0-rc2"] # e.g. "v2.6.1"
     name: ${{ matrix.canvas_tag}}, Node.js ${{ matrix.node }}, macOS
     runs-on: macos-latest # macos-14+ is M1
-    if: ${{ target.os }} == 'macos-latest'
+    if: contains(fromJson(inputs.os)), 'macos-latest')
     env:
       CANVAS_VERSION_TO_BUILD: ${{ matrix.canvas_tag }}
     steps:
@@ -314,7 +314,7 @@ jobs:
         canvas_tag: ["v3.0.0-rc2"] # e.g. "v2.6.1"
     name: ${{ matrix.canvas_tag}}, Node.js ${{ matrix.node }}, Windows
     runs-on: target-latest
-    if: ${{ target.os }} == 'windows-latest'
+    if: contains(fromJson(inputs.os)), 'windows-latest')
     env:
       CANVAS_VERSION_TO_BUILD: ${{ matrix.canvas_tag }}
     steps:
