@@ -32,7 +32,21 @@
 # "edit" and delete any assets that are in purgatory (have a /!\ next to them).
 
 name: Make Prebuilds
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      os:
+        description: 'Target os'
+        required: true
+        type: choice
+        options:
+          - '["ubuntu-latest"]'
+          - '["windows-latest"]'
+          - '["macos-13"]'
+          - '["macos-latest"]'
+          - '["ubuntu-latest", "windows-latest", "macos-13", "macos-latest"]'
+        default: '["ubuntu-latest", "windows-latest", "macos-13", "macos-latest"]'
+        
 
 # UPLOAD_TO can be specified to upload the release assets under a different tag
 # name (e.g. for testing). If omitted, the assets are published under the same
@@ -50,11 +64,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os: ${{ fromJson(inputs.os) }}
         node: [22]
         canvas_tag: ["v3.0.0-rc2"] # e.g. "v2.6.1"
     name: ${{ matrix.canvas_tag }}, Node.js ${{ matrix.node }}, Linux
     runs-on: ubuntu-latest
-    if: (0)
+    if: ${{ matrix.os }} == 'ubuntu-latest'
     container:
       image: ${{ matrix.node < 18 && 'chearon/canvas-prebuilt:9' || 'zbbjornson/canvas-prebuilt:11' }}
     env:
@@ -143,10 +158,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os: ${{ fromJson(inputs.os) }}
         node: [22]
         canvas_tag: ["v3.0.0-rc2"] # e.g. "v2.6.1"
     name: ${{ matrix.canvas_tag}}, Node.js ${{ matrix.node }}, macOS
     runs-on: macos-13 # macos-14+ is M1
+    if: ${{ matrix.os }} == 'macos-13'
     env:
       CANVAS_VERSION_TO_BUILD: ${{ matrix.canvas_tag }}
     steps:
@@ -217,10 +234,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os: ${{ fromJson(inputs.os) }}
         node: [22]
         canvas_tag: ["v3.0.0-rc2"] # e.g. "v2.6.1"
     name: ${{ matrix.canvas_tag}}, Node.js ${{ matrix.node }}, macOS
     runs-on: macos-latest # macos-14+ is M1
+    if: ${{ matrix.os }} == 'macos-latest'
     env:
       CANVAS_VERSION_TO_BUILD: ${{ matrix.canvas_tag }}
     steps:
@@ -290,11 +309,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os: ${{ fromJson(inputs.os) }}
         node: [22]
         canvas_tag: ["v3.0.0-rc2"] # e.g. "v2.6.1"
     name: ${{ matrix.canvas_tag}}, Node.js ${{ matrix.node }}, Windows
-    runs-on: windows-2019
-    if: (0)
+    runs-on: windows-latest
+    if: ${{ matrix.os }} == 'windows-latest'
     env:
       CANVAS_VERSION_TO_BUILD: ${{ matrix.canvas_tag }}
     steps:
