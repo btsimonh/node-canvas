@@ -22,7 +22,8 @@
     "pdf"
   ],
   "homepage": "https://github.com/Automattic/node-canvas",
-  "repository": "git://github.com/Automattic/node-canvas.git",
+  "repositoryorg": "git://github.com/Automattic/node-canvas.git",
+  "repository": "git://github.com/btsimonh/node-canvas.git",
   "scripts": {
     "prebenchmark": "node-gyp build",
     "benchmark": "node benchmarks/run.js",
