@@ -357,15 +357,19 @@ jobs:
           . prebuild/Windows/bundle.sh
           ./depends.exe -c -oc depends.csv build\\Release\\canvas.node || true
           [ -f depends.csv ] || { echo "error invoking depends.exe"; exit 1; }
+          
+          echo done depends
 
           copies=$(comm -12 \
             <(cat depends.csv | cut -d ',' -f2 | sed 's/"//g' | tr '[:upper:]' '[:lower:]' | sort) \
             <(find /ucrt64/bin -name '*.dll' -printf "%f\n" | tr '[:upper:]' '[:lower:]' | sort) \
           )
 
+          echo start copy .dll files
           for dll in $copies; do
             cp /ucrt64/bin/$dll build/Release
           done;
+          echo done copy .dll files
           
       - name: Test binary
         # By not running in msys2, this doesn't have access to the msys2 libs
