@@ -307,7 +307,7 @@ jobs:
       fail-fast: false
       matrix:
         node: [22]
-        canvas_tag: ["v3.0.0-rc2"] # e.g. "v2.6.1"
+        canvas_tag: ["dev"] # e.g. "v2.6.1"
     name: ${{ matrix.canvas_tag}}, Node.js ${{ matrix.node }}, Windows
     runs-on: windows-latest
     if: contains(fromJson(inputs.os), 'windows-latest')
