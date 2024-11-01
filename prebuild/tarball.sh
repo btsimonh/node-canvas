@@ -3,6 +3,7 @@
 FILENAME=$(
   node -e "
     var p = process, v = p.versions;
+    const detectLibc = require('detect-libc');
     const libc = process.env.LIBC || process.env.npm_config_libc ||
       (detectLibc.isNonGlibcLinuxSync() && detectLibc.familySync()) || ''
     const tagName = p.env.UPLOAD_TO || p.env.CANVAS_VERSION_TO_BUILD;
