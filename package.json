@@ -32,7 +32,7 @@
     "test-server": "node test/server.js",
     "generate-wpt": "node ./test/wpt/generate.js",
     "test-wpt": "mocha test/wpt/generated/*.js",
-    "install": "prebuild-install -r napi || node-gyp rebuild",
+    "install": "prebuild-install --verbose -r napi || node-gyp rebuild",
     "tsd": "tsd"
   },
   "files": [
