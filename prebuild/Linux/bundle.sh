@@ -14,4 +14,4 @@ for so in $copies; do
   patchelf --set-rpath '$ORIGIN' build/Release/$(basename $so)
 done;
 
-strip build/*.so*
+find "./build/Release" -type f -name "*.so*" -exec strip --strip-unneeded {} \;
